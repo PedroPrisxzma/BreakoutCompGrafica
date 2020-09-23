@@ -38,17 +38,16 @@ Game::~Game()
 
 void Game::Init()
 {
-    Shader mySprite = ResourceManager::GetShader("sprite");
-    Texture2D myPaddle = ResourceManager::GetTexture("paddle");
-    Texture2D myFace = ResourceManager::GetTexture("face");
+    
     // load shaders
-    ResourceManager::LoadShader("shaders/sprite.vs", "shaders/sprite.frag", nullptr, "sprite");
+    ResourceManager::LoadShader("shaders/sprite.vs", "shaders/sprite.fs", nullptr, "sprite");
     // configure shaders
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(this->Width), 
         static_cast<float>(this->Height), 0.0f, -1.0f, 1.0f);
     ResourceManager::GetShader("sprite").Use().SetInteger("image", 0);
     ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
     // set render-specific controls
+    Shader mySprite = ResourceManager::GetShader("sprite");
     Renderer = new SpriteRenderer(mySprite);
     // load textures
     ResourceManager::LoadTexture("textures/background.jpg", false, "background");
@@ -68,9 +67,11 @@ void Game::Init()
     this->Level = 0;
     // configure game objects
     glm::vec2 playerPos = glm::vec2(this->Width / 2.0f - PLAYER_SIZE.x / 2.0f, this->Height - PLAYER_SIZE.y);
+    Texture2D myPaddle = ResourceManager::GetTexture("paddle");
     Player = new GameObject(playerPos, PLAYER_SIZE, myPaddle);
     // Ball
     glm::vec2 ballPos = playerPos + glm::vec2(PLAYER_SIZE.x / 2.0f - BALL_RADIUS, -BALL_RADIUS * 2.0f);
+    Texture2D myFace = ResourceManager::GetTexture("face");
     Ball = new BallObject(ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, myFace);
 
 }
