@@ -206,18 +206,22 @@ void Game::ProcessInput(float dt)
     }
 
     if(this->State == GAME_PAUSE)
-    {
+    {   
+        Ball->Stuck = true;
         if(!this->MouseButtons[GLFW_MOUSE_BUTTON_LEFT])
-        {
+        {   
             this->State = GAME_ACTIVE;
+            Ball->Stuck = false;
         }
 
     }
     if(this->State == GAME_ATTRIBUTES)
-    {
+    {   
+        Ball->Stuck = true;
         if(!this->MouseButtons[GLFW_MOUSE_BUTTON_RIGHT])
         {
             this->State = GAME_ACTIVE;
+            Ball->Stuck = false;
         }
     }
 }
