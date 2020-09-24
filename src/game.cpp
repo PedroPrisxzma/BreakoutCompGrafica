@@ -146,29 +146,6 @@ void Game::ProcessInput(float dt)
             if (Ball->Stuck)
                 Ball->Position.x += velocity + dt;
         }
-       // printf("Velocity: %f\n xPos: %f\n width: %d\n", velocity, this->xPos, this->Width);
-       
-        /*
-        if (this->Keys[GLFW_KEY_A])
-        {
-            if (Player->Position.x >= 0.0f)
-            {
-                Player->Position.x -= velocity;
-                if (Ball->Stuck)
-                    Ball->Position.x -= velocity;
-            }
-        }
-        if (this->Keys[GLFW_KEY_D])
-        {
-            if (Player->Position.x <= this->Width - Player->Size.x)
-            {
-                Player->Position.x += velocity;
-                if (Ball->Stuck)
-                    Ball->Position.x += velocity;
-            }
-        }
-
-        */
         if (this->Keys[GLFW_KEY_SPACE])
             Ball->Stuck = false;
         if (this->Keys[GLFW_KEY_R])
@@ -268,13 +245,17 @@ void Game::Render()
         
         std::stringstream playerX; playerX << Player->Position.x;
         std::stringstream playerY; playerY << Player->Position.y;
+        std::stringstream playerVx; playerVx << Player->Velocity.x;
+        std::stringstream playerVy; playerVy << Player->Velocity.y;
 
         std::stringstream ballX; ballX << Ball->Position.x;
         std::stringstream ballY; ballY << Ball->Position.y;
+        std::stringstream ballVx; ballVx << Ball->Velocity.x;
+        std::stringstream ballVy; ballVy << Ball->Velocity.y;
 
         Text->RenderText("ATTRIBUTES:", 5.0f, 5.0f, 1.0f);
-        Text->RenderText("Paddle: (" + playerX.str() + "," + playerY.str() + ")", 5.0f, 50.0f, 1.0f);
-        Text->RenderText("Ball: (" + ballX.str() + "," + ballY.str() + ")", 5.0f, 100.0f, 1.0f);
+        Text->RenderText("Paddle: (" + playerX.str() + "," + playerY.str() + ")  V: (" + playerVx.str() + "," + playerVy.str() + ")", 5.0f, 50.0f, 1.0f);
+        Text->RenderText("Ball: (" + ballX.str() + "," + ballY.str() + ")  V: (" + ballVx.str() + "," + ballVy.str() + ")", 5.0f, 100.0f, 1.0f);
     }
 }
 
