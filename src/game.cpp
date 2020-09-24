@@ -11,12 +11,15 @@
 #include "game.h"
 #include "resource_manager.h"
 #include "sprite_renderer.h"
-#include "text_renderer.h"
 #include "game_object.h"
 #include "ball_object.h"
 #include "game_level.h"
 #include "colision.h"
 #include "particle_generator.h"
+#include "text_renderer.h"
+
+#include <sstream>
+#include <iostream>
 // Game-related State data
 SpriteRenderer  *Renderer;
 GameObject      *Player;
