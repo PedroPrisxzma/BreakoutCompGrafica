@@ -95,20 +95,20 @@ void Game::ProcessInput(float dt)
 {
 if (this->State == GAME_ACTIVE)
     {
-        float velocity = PLAYER_VELOCITY * dt;
+        float velocity = PLAYER_VELOCITY * this->xPos / this->Width;//dt;
         // move playerboard
         // If player paddle is in first half of the screen
         if(this->xPos >= 0.0f && this->xPos <= this->Width/2 - Player->Size.x/2) 
         {
-            Player->Position.x -= this->xPos / this->Width;
+            Player->Position.x -= velocity;
             if (Ball->Stuck)
-                Ball->Position.x -= this->xPos / this->Width;
+                Ball->Position.x -= velocity;
         }
-        else if(this->xPos < this->Width - Player->Size.x)
+        else if(this->xPos <= this->Width - Player->Size.x)
         {
-            Player->Position.x += this->xPos / this->Width;
+            Player->Position.x += velocity;
             if (Ball->Stuck)
-                Ball->Position.x += this->xPos / this->Width;
+                Ball->Position.x += velocity;
         }
         /*
         if (this->Keys[GLFW_KEY_A])

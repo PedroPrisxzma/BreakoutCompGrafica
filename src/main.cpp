@@ -54,6 +54,11 @@ int main(int argc, char *argv[])
 
     glfwSetKeyCallback(window, key_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(window, cursor_position_callback);
+    //glfwSetInputMode(window, GLFW_CURSOR_HIDDEN);
+    glfwSetCursorEnterCallback(window, cursor_enter_callback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
+    glfwSetInputMode(window, GLFW_STICKY_MOUSE_BUTTONS,1);
 
     // OpenGL configuration
     // --------------------
