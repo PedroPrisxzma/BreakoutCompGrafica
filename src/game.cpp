@@ -15,9 +15,11 @@
 #include "ball_object.h"
 #include "game_level.h"
 #include "colision.h"
+#include "particle_generator.h"
 // Game-related State data
 SpriteRenderer  *Renderer;
 GameObject      *Player;
+ParticleGenerator   *Particles;
 
 const glm::vec2 INITIAL_BALL_VELOCITY(100.0f, -350.0f);
 const float BALL_RADIUS = 12.5f;
@@ -41,6 +43,7 @@ void Game::Init()
     
     // load shaders
     ResourceManager::LoadShader("shaders/sprite.vs", "shaders/sprite.fs", nullptr, "sprite");
+    ResourceManager::LoadShader("shaders/particle.vs", "shaders/particle.fs", nullptr, "particle");
     // configure shaders
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(this->Width), 
         static_cast<float>(this->Height), 0.0f, -1.0f, 1.0f);
@@ -55,6 +58,7 @@ void Game::Init()
     ResourceManager::LoadTexture("textures/block.png", false, "block");
     ResourceManager::LoadTexture("textures/block_solid.png", false, "block_solid");
     ResourceManager::LoadTexture("textures/paddle.png", true, "paddle");
+    ResourceManager::LoadTexture("textures/particle.png", true, "particle");
     // load levels
     GameLevel one; one.Load("levels/one.lvl", this->Width, this->Height / 2);
     GameLevel two; two.Load("levels/two.lvl", this->Width, this->Height / 2);
@@ -73,6 +77,12 @@ void Game::Init()
     glm::vec2 ballPos = playerPos + glm::vec2(PLAYER_SIZE.x / 2.0f - BALL_RADIUS, -BALL_RADIUS * 2.0f);
     Texture2D myFace = ResourceManager::GetTexture("face");
     Ball = new BallObject(ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, myFace);
+    
+    Particles = new ParticleGenerator(
+        ResourceManager::GetShader("particle"), 
+        ResourceManager::GetTexture("particle"), 
+        500
+    );
 
 }
 
@@ -82,7 +92,7 @@ void Game::Update(float dt)
     Ball->Move(dt, this->Width);
     // check for collisions
     this->DoCollisions();
-
+    Particles->Update(dt, *Ball, 2, glm::vec2(Ball->Radius / 2.0f));    
     if (Ball->Position.y >= this->Height) // did ball reach bottom edge?
     {
         this->ResetLevel();
@@ -95,21 +105,27 @@ void Game::ProcessInput(float dt)
 {
 if (this->State == GAME_ACTIVE)
     {
-        float velocity = this->xPos / this->Width;//dt;
+        float velocity = 0;
+        if(this->Width != 800){
+            printf("ERROR\n ");
+        }
         // move playerboard
         // If player paddle is in first half of the screen
-        if(this->xPos >= 0.0f && this->xPos <= this->Width/2 - Player->Size.x/2) 
+        if(this->xPos >= 0.0f && this->xPos <= this->Width/2) 
         {
-            Player->Position.x -= velocity;
+            velocity = (this->Width/2 - this->xPos)/this->Width;
+            Player->Position.x -=  velocity;
             if (Ball->Stuck)
-                Ball->Position.x -= velocity;
+                Ball->Position.x -= velocity + dt;
         }
-        else if(this->xPos <= this->Width - Player->Size.x)
+        else if(this->xPos <= this->Width)
         {
+            velocity = (this->xPos - this->Width/2)/this->Width;
             Player->Position.x += velocity;
             if (Ball->Stuck)
-                Ball->Position.x += velocity;
+                Ball->Position.x += velocity + dt;
         }
+        printf("Velocity: %f\n xPos: %f\n width: %d\n", velocity, this->xPos, this->Width);
         /*
         if (this->Keys[GLFW_KEY_A])
         {
@@ -147,6 +163,9 @@ void Game::Render()
         this->Levels[this->Level].Draw(*Renderer);
         // draw player
         Player->Draw(*Renderer);
+        // draw particles	
+        Particles->Draw();
+        // draw ball
         Ball->Draw(*Renderer);
     }
 }
