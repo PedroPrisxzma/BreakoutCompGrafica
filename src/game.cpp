@@ -32,7 +32,7 @@ const float BALL_RADIUS = 12.5f;
 BallObject      *Ball;
 
 Game::Game(unsigned int width, unsigned int height) 
-    : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
+    : State(GAME_MENU), Keys(), Width(width), Height(height)
 { 
 
 }
@@ -174,12 +174,17 @@ if (this->State == GAME_ACTIVE)
             Ball->Stuck = false;
         if (this->Keys[GLFW_KEY_R])
             this->ResetLevel();
+        if(this->MouseButtons[0])
+            this->State = GAME_PAUSE;
+        if(this->MouseButtons[1])
+            this->State = GAME_ATTRIBUTES;
+
     }
     if(this->State == GAME_MENU)
     {
         if(this->Keys[GLFW_KEY_ENTER])
             this->State = GAME_ACTIVE;
-        /*
+        
         if(this->Keys[GLFW_KEY_W])
             this->Level = (this->Level+1)%4;
         if(this->Keys[GLFW_KEY_S])
@@ -189,12 +194,26 @@ if (this->State == GAME_ACTIVE)
             else
                 this->Level = 3;
         }
-        */
+        
     }
     if(this->State == GAME_WIN)
     {
         if(this->Keys[GLFW_KEY_ENTER])
             this->State = GAME_MENU;
+    }
+
+    if(this->State == GAME_PAUSE)
+    {
+        Text->RenderText("PAUSE", 250.0f, Height/2, 1.0f);
+        if(this->MouseButtons[0])
+            this->State = GAME_ACTIVE;
+
+    }
+    if(this->State == GAME_ATTRIBUTES)
+    {
+        Text->RenderText("ATTRIBUTES", 250.0f, Height/2, 1.0f);
+        if(this->MouseButtons[1])
+            this->State = GAME_ACTIVE;
     }
 }
 

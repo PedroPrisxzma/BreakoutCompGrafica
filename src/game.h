@@ -20,7 +20,9 @@
 enum GameState {
     GAME_ACTIVE,
     GAME_MENU,
-    GAME_WIN
+    GAME_WIN,
+    GAME_PAUSE,
+    GAME_ATTRIBUTES
 };
 
 // Initial size of the player paddle
@@ -38,12 +40,13 @@ public:
     GameState               State;  
     bool                    Keys[1024];
     bool                    CursorEntered; 
+    bool                    MouseButtons[2];
     double                  xPos;
     double                  yPos;
     unsigned int            Width, Height;
     std::vector<GameLevel>  Levels;
     unsigned int            Level;
-    unsigned int            Lives;
+    unsigned int            Lives = 3;
     // constructor/destructor
     Game(unsigned int width, unsigned int height);
     ~Game();

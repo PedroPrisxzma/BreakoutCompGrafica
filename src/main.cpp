@@ -135,26 +135,31 @@ static void cursor_position_callback(GLFWwindow *window, double xPos, double yPo
 void cursor_enter_callback(GLFWwindow *window, int entered)
 {
     if(entered)
-    {
         Breakout.CursorEntered = true;
-    }
+    
     else
-    {
         Breakout.CursorEntered = false;
-    }
 
 }
 
 
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
-    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    if (button == GLFW_MOUSE_BUTTON_LEFT)
     {
-        // pausa
+        if (action == GLFW_PRESS)
+            Breakout.MouseButtons[0] = true;
+        else if (action == GLFW_RELEASE)
+            Breakout.MouseButtons[0] = false;
     }
-    if(button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+        
+       
+    if (button == GLFW_MOUSE_BUTTON_RIGHT)
     {
-        // atributos e pausa
+        if (action == GLFW_PRESS)
+            Breakout.MouseButtons[1] = true;
+        else if (action == GLFW_RELEASE)
+            Breakout.MouseButtons[1] = false;
     }
 }
 
