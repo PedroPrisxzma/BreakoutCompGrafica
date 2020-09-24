@@ -207,7 +207,6 @@ void Game::ProcessInput(float dt)
 
     if(this->State == GAME_PAUSE)
     {
-        Text->RenderText("PAUSE", 250.0f, Height/2, 1.0f);
         if(!this->MouseButtons[GLFW_MOUSE_BUTTON_LEFT])
         {
             this->State = GAME_ACTIVE;
@@ -216,7 +215,6 @@ void Game::ProcessInput(float dt)
     }
     if(this->State == GAME_ATTRIBUTES)
     {
-        Text->RenderText("ATTRIBUTES", 250.0f, Height/2, 1.0f);
         if(!this->MouseButtons[GLFW_MOUSE_BUTTON_RIGHT])
         {
             this->State = GAME_ACTIVE;
@@ -226,7 +224,7 @@ void Game::ProcessInput(float dt)
 
 void Game::Render()
 {
-    if(this->State == GAME_ACTIVE || this->State == GAME_MENU)
+    if(this->State == GAME_ACTIVE || this->State == GAME_MENU || this->State == GAME_PAUSE)
     {
         Texture2D myBackground = ResourceManager::GetTexture("background");
         // draw background
@@ -240,18 +238,39 @@ void Game::Render()
         // draw ball
         Ball->Draw(*Renderer);
 
-        std::stringstream ss; ss << this->Lives;
-        Text->RenderText("Lives:" + ss.str(), 5.0f, 5.0f, 1.0f);
+        std::stringstream balls; balls << this->Lives;
+        Text->RenderText("Balls:" + balls.str(), 5.0f, 5.0f, 1.0f);
+        Text->RenderText("Bricks:" + balls.str(), 150.0f, 5.0f, 1.0f);
     }
     if(this->State == GAME_MENU)
     {
         Text->RenderText("Press ENTER to Start", 250.0f, Height/2, 1.0f);
-        //Text->RenderText("Press W or S to select level", 245.0f, Height / 2 + 20.0f, 0.75f)
+        Text->RenderText("Press W or S to select level", 245.0f, Height / 2 + 20.0f, 0.75f);
     }
     if(this->State == GAME_WIN)
     {
         Text->RenderText("You WON!!!", 320.0, Height / 2 - 20.0, 1.0, glm::vec3(0.0, 1.0, 0.0));
         Text->RenderText("Press ENTER to retry or Q to quit", 130.0, Height / 2, 1.0, glm::vec3(1.0, 1.0, 0.0));
+    }
+    if(this->State == GAME_PAUSE)
+    {
+        Text->RenderText("PAUSE", 400.0f, Height/2, 1.0f);
+    }
+    if(this->State == GAME_ATTRIBUTES)
+    {   
+        Texture2D myBackground = ResourceManager::GetTexture("background");
+        // draw background
+        Renderer->DrawSprite(myBackground, glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
+        
+        std::stringstream playerX; playerX << Player->Position.x;
+        std::stringstream playerY; playerY << Player->Position.y;
+
+        std::stringstream ballX; ballX << Ball->Position.x;
+        std::stringstream ballY; ballY << Ball->Position.y;
+
+        Text->RenderText("ATTRIBUTES:", 5.0f, 5.0f, 1.0f);
+        Text->RenderText("Paddle: (" + playerX.str() + "," + playerY.str() + ")", 5.0f, 50.0f, 1.0f);
+        Text->RenderText("Ball: (" + ballX.str() + "," + ballY.str() + ")", 5.0f, 100.0f, 1.0f);
     }
 }
 
@@ -315,6 +334,7 @@ void Game::ResetLevel()
     this->ResetPlayer();
     Ball->Stuck = true;
     this->Lives = 3;
+    this->State = GAME_MENU;
     if (this->Level == 0)
         this->Levels[0].Load("levels/one.lvl", this->Width, this->Height / 2);
     else if (this->Level == 1)
