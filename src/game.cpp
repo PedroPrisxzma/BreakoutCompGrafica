@@ -122,7 +122,7 @@ void Game::Update(float dt)
 
 void Game::ProcessInput(float dt)
 {
-if (this->State == GAME_ACTIVE)
+    if (this->State == GAME_ACTIVE)
     {
         float velocity = 0;
         if(this->Width != 800){
@@ -133,8 +133,7 @@ if (this->State == GAME_ACTIVE)
         if(this->xPos >= 0.0f && this->xPos <= this->Width/2 
             && Player->Position.x >= 0.0f) 
         {
-            printf("Player Pos: %f\n Dt value: %f\n", Player->Position.x, dt);
-            velocity = (this->Width/2 - this->xPos)/this->Width + dt;
+            velocity = (this->Width/2 - this->xPos)/(this->Width/15);
             Player->Position.x -=  velocity;
             if (Ball->Stuck)
                 Ball->Position.x -= velocity + dt;
@@ -142,13 +141,13 @@ if (this->State == GAME_ACTIVE)
         else if(this->xPos <= this->Width && this->xPos > this->Width/2 
                 && Player->Position.x <= this->Width - Player->Size.x)
         {
-            printf("Player Pos: %f\n", Player->Position.x);
-            velocity = (this->xPos - this->Width/2)/this->Width + dt;
+            velocity = (this->xPos - this->Width/2)/(this->Width/15);
             Player->Position.x += velocity;
             if (Ball->Stuck)
                 Ball->Position.x += velocity + dt;
         }
-        //printf("Velocity: %f\n xPos: %f\n width: %d\n", velocity, this->xPos, this->Width);
+       // printf("Velocity: %f\n xPos: %f\n width: %d\n", velocity, this->xPos, this->Width);
+       
         /*
         if (this->Keys[GLFW_KEY_A])
         {
@@ -174,10 +173,14 @@ if (this->State == GAME_ACTIVE)
             Ball->Stuck = false;
         if (this->Keys[GLFW_KEY_R])
             this->ResetLevel();
-        if(this->MouseButtons[0])
+        if(this->MouseButtons[GLFW_MOUSE_BUTTON_LEFT])
+        {
             this->State = GAME_PAUSE;
-        if(this->MouseButtons[1])
+        }
+        if(this->MouseButtons[GLFW_MOUSE_BUTTON_RIGHT])
+        {
             this->State = GAME_ATTRIBUTES;
+        }
 
     }
     if(this->State == GAME_MENU)
@@ -205,15 +208,19 @@ if (this->State == GAME_ACTIVE)
     if(this->State == GAME_PAUSE)
     {
         Text->RenderText("PAUSE", 250.0f, Height/2, 1.0f);
-        if(this->MouseButtons[0])
+        if(!this->MouseButtons[GLFW_MOUSE_BUTTON_LEFT])
+        {
             this->State = GAME_ACTIVE;
+        }
 
     }
     if(this->State == GAME_ATTRIBUTES)
     {
         Text->RenderText("ATTRIBUTES", 250.0f, Height/2, 1.0f);
-        if(this->MouseButtons[1])
+        if(!this->MouseButtons[GLFW_MOUSE_BUTTON_RIGHT])
+        {
             this->State = GAME_ACTIVE;
+        }
     }
 }
 

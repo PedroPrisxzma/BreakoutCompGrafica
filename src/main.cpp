@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-    // when a user presses the escape key, we set the WindowShouldClose property to true, closing the application
+    // when a user presses the Q key, we set the WindowShouldClose property to true, closing the application
     if (key == GLFW_KEY_Q && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     if (key >= 0 && key < 1024)
@@ -147,19 +147,19 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT)
     {
-        if (action == GLFW_PRESS)
-            Breakout.MouseButtons[0] = true;
-        else if (action == GLFW_RELEASE)
-            Breakout.MouseButtons[0] = false;
+        if (action == GLFW_PRESS && !Breakout.MouseButtons[GLFW_MOUSE_BUTTON_LEFT])
+            Breakout.MouseButtons[GLFW_MOUSE_BUTTON_LEFT] = true;
+        else if (action == GLFW_PRESS && Breakout.MouseButtons[GLFW_MOUSE_BUTTON_LEFT])
+            Breakout.MouseButtons[GLFW_MOUSE_BUTTON_LEFT] = false;
     }
         
        
-    if (button == GLFW_MOUSE_BUTTON_RIGHT)
+    else if (button == GLFW_MOUSE_BUTTON_RIGHT)
     {
-        if (action == GLFW_PRESS)
-            Breakout.MouseButtons[1] = true;
-        else if (action == GLFW_RELEASE)
-            Breakout.MouseButtons[1] = false;
+        if (action == GLFW_PRESS && !Breakout.MouseButtons[GLFW_MOUSE_BUTTON_RIGHT])
+            Breakout.MouseButtons[GLFW_MOUSE_BUTTON_RIGHT] = true;
+        else if (action == GLFW_PRESS && Breakout.MouseButtons[GLFW_MOUSE_BUTTON_RIGHT])
+            Breakout.MouseButtons[GLFW_MOUSE_BUTTON_RIGHT] = false;
     }
 }
 
