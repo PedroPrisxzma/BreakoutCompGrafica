@@ -2,7 +2,7 @@ COMPILER = g++
 
 FLAGS = -std=c++1y -pedantic -Wall
 
-GL_FLAGS = -lglfw -lGL -lm -lX11 -lpthread -lXi -lXrandr -ldl
+GL_FLAGS = -lglfw3 -lGL -lm -lX11 -lpthread -lXi -lXrandr -ldl
 
 FILES = $(wildcard src/*.cpp) $(wildcard src/*.c)
 

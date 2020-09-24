@@ -19,6 +19,9 @@
 // GLFW function declerations
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+static void cursor_position_callback(GLFWwindow *window, double xPos, double yPos);
+void cursor_enter_callback(GLFWwindow *window, int entered);
+void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 
 // The Width of the screen
 const unsigned int SCREEN_WIDTH = 800;
@@ -112,6 +115,41 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             Breakout.Keys[key] = true;
         else if (action == GLFW_RELEASE)
             Breakout.Keys[key] = false;
+    }
+}
+
+static void cursor_position_callback(GLFWwindow *window, double xPos, double yPos)
+{
+    if(Breakout.CursorEntered)
+    {
+        Breakout.xPos = xPos;
+        Breakout.yPos = yPos;
+    }
+}
+
+void cursor_enter_callback(GLFWwindow *window, int entered)
+{
+    if(entered)
+    {
+        Breakout.CursorEntered = true;
+    }
+    else
+    {
+        Breakout.CursorEntered = false;
+    }
+
+}
+
+
+void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
+{
+    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        // pausa
+    }
+    if(button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+    {
+        // atributos e pausa
     }
 }
 

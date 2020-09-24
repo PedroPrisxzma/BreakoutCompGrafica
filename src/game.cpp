@@ -97,6 +97,20 @@ if (this->State == GAME_ACTIVE)
     {
         float velocity = PLAYER_VELOCITY * dt;
         // move playerboard
+        // If player paddle is in first half of the screen
+        if(this->xPos >= 0.0f && this->xPos <= this->Width/2 - Player->Size.x/2) 
+        {
+            Player->Position.x -= this->xPos / this->Width;
+            if (Ball->Stuck)
+                Ball->Position.x -= this->xPos / this->Width;
+        }
+        else if(this->xPos < this->Width - Player->Size.x)
+        {
+            Player->Position.x += this->xPos / this->Width;
+            if (Ball->Stuck)
+                Ball->Position.x += this->xPos / this->Width;
+        }
+        /*
         if (this->Keys[GLFW_KEY_A])
         {
             if (Player->Position.x >= 0.0f)
@@ -115,6 +129,8 @@ if (this->State == GAME_ACTIVE)
                     Ball->Position.x += velocity;
             }
         }
+
+        */
         if (this->Keys[GLFW_KEY_SPACE])
             Ball->Stuck = false;
     }
