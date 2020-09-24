@@ -90,7 +90,7 @@ void Game::Init()
     );
 
     Text = new TextRenderer(this->Width, this->Height);
-    Text->Load("fonts/OCRAEXT.TFF", 24);
+    Text->Load("fonts/OCRAEXT.TTF", 24);
 
 }
 
@@ -130,16 +130,20 @@ if (this->State == GAME_ACTIVE)
         }
         // move playerboard
         // If player paddle is in first half of the screen
-        if(this->xPos >= 0.0f && this->xPos <= this->Width/2) 
+        if(this->xPos >= 0.0f && this->xPos <= this->Width/2 
+            && Player->Position.x >= 0.0f) 
         {
-            velocity = (this->Width/2 - this->xPos)/this->Width;
+            printf("Player Pos: %f\n Dt value: %f\n", Player->Position.x, dt);
+            velocity = (this->Width/2 - this->xPos)/this->Width + dt;
             Player->Position.x -=  velocity;
             if (Ball->Stuck)
                 Ball->Position.x -= velocity + dt;
         }
-        else if(this->xPos <= this->Width)
+        else if(this->xPos <= this->Width && this->xPos > this->Width/2 
+                && Player->Position.x <= this->Width - Player->Size.x)
         {
-            velocity = (this->xPos - this->Width/2)/this->Width;
+            printf("Player Pos: %f\n", Player->Position.x);
+            velocity = (this->xPos - this->Width/2)/this->Width + dt;
             Player->Position.x += velocity;
             if (Ball->Stuck)
                 Ball->Position.x += velocity + dt;
