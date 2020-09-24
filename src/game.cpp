@@ -95,7 +95,7 @@ void Game::ProcessInput(float dt)
 {
 if (this->State == GAME_ACTIVE)
     {
-        float velocity = PLAYER_VELOCITY * this->xPos / this->Width;//dt;
+        float velocity = this->xPos / this->Width;//dt;
         // move playerboard
         // If player paddle is in first half of the screen
         if(this->xPos >= 0.0f && this->xPos <= this->Width/2 - Player->Size.x/2) 
