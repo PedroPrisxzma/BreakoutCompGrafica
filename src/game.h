@@ -43,6 +43,7 @@ public:
     unsigned int            Width, Height;
     std::vector<GameLevel>  Levels;
     unsigned int            Level;
+    unsigned int            Lives;
     // constructor/destructor
     Game(unsigned int width, unsigned int height);
     ~Game();

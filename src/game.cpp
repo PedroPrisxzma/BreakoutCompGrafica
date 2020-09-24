@@ -11,6 +11,7 @@
 #include "game.h"
 #include "resource_manager.h"
 #include "sprite_renderer.h"
+#include "text_renderer.h"
 #include "game_object.h"
 #include "ball_object.h"
 #include "game_level.h"
@@ -84,6 +85,9 @@ void Game::Init()
         500
     );
 
+    Text = new TextRenderer(this->Width, this->Height);
+    Text->Load("fonts/OCRAEXT.TFF", 24);
+
 }
 
 void Game::Update(float dt)
@@ -95,8 +99,19 @@ void Game::Update(float dt)
     Particles->Update(dt, *Ball, 2, glm::vec2(Ball->Radius / 2.0f));    
     if (Ball->Position.y >= this->Height) // did ball reach bottom edge?
     {
+        --this->Lives;
+        if(this->Lives <= 0){
+            this->ResetLevel();
+            this->State = GAME_MENU;
+        }
+        this->ResetPlayer();
+    }
+
+    if(this->State == GAME_ACTIVE && this->Levels[this->Level].IsCompleted())
+    {
         this->ResetLevel();
         this->ResetPlayer();
+        this->State = GAME_WIN;
     }
 }  
 
@@ -125,7 +140,7 @@ if (this->State == GAME_ACTIVE)
             if (Ball->Stuck)
                 Ball->Position.x += velocity + dt;
         }
-        printf("Velocity: %f\n xPos: %f\n width: %d\n", velocity, this->xPos, this->Width);
+        //printf("Velocity: %f\n xPos: %f\n width: %d\n", velocity, this->xPos, this->Width);
         /*
         if (this->Keys[GLFW_KEY_A])
         {
@@ -149,12 +164,35 @@ if (this->State == GAME_ACTIVE)
         */
         if (this->Keys[GLFW_KEY_SPACE])
             Ball->Stuck = false;
+        if (this->Keys[GLFW_KEY_R])
+            this->ResetLevel();
+    }
+    if(this->State == GAME_MENU)
+    {
+        if(this->Keys[GLFW_KEY_ENTER])
+            this->State = GAME_ACTIVE;
+        /*
+        if(this->Keys[GLFW_KEY_W])
+            this->Level = (this->Level+1)%4;
+        if(this->Keys[GLFW_KEY_S])
+        {
+            if(this->Level > 0)
+                --this->Level;
+            else
+                this->Level = 3;
+        }
+        */
+    }
+    if(this->State == GAME_WIN)
+    {
+        if(this->Keys[GLFW_KEY_ENTER])
+            this->State = GAME_MENU;
     }
 }
 
 void Game::Render()
 {
-    if(this->State == GAME_ACTIVE)
+    if(this->State == GAME_ACTIVE || this->State == GAME_MENU)
     {
         Texture2D myBackground = ResourceManager::GetTexture("background");
         // draw background
@@ -167,6 +205,19 @@ void Game::Render()
         Particles->Draw();
         // draw ball
         Ball->Draw(*Renderer);
+
+        std::stringstream ss; ss << this->Lives;
+        Text->RenderText("Lives:" + ss.str(), 5.0f, 5.0f, 1.0f);
+    }
+    if(this->State == GAME_MENU)
+    {
+        Text->RenderText("Press ENTER to Start", 250.0f, Height/2, 1.0f);
+        //Text->RenderText("Press W or S to select level", 245.0f, Height / 2 + 20.0f, 0.75f)
+    }
+    if(this->State == GAME_WIN)
+    {
+        Text->RenderText("You WON!!!", 320.0, Height / 2 - 20.0, 1.0, glm::vec3(0.0, 1.0, 0.0));
+        Text->RenderText("Press ENTER to retry or Q to quit", 130.0, Height / 2, 1.0, glm::vec3(1.0, 1.0, 0.0));
     }
 }
 
@@ -226,7 +277,10 @@ void Game::DoCollisions()
 }  
 
 void Game::ResetLevel()
-{
+{   
+    this->ResetPlayer();
+    Ball->Stuck = true;
+    this->Lives = 3;
     if (this->Level == 0)
         this->Levels[0].Load("levels/one.lvl", this->Width, this->Height / 2);
     else if (this->Level == 1)
