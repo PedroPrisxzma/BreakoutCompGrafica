@@ -124,7 +124,7 @@ void Game::ProcessInput(float dt)
 {
     if (this->State == GAME_ACTIVE)
     {
-        float velocity = 0;
+        this->PaddleVelocity = 0;
         if(this->Width != 800){
             printf("ERROR\n ");
         }
@@ -133,32 +133,27 @@ void Game::ProcessInput(float dt)
         if(this->xPos >= 0.0f && this->xPos <= this->Width/2 
             && Player->Position.x >= 0.0f) 
         {
-            velocity = (this->Width/2 - this->xPos)/(this->Width/15);
-            Player->Position.x -=  velocity;
+            this->PaddleVelocity = (this->Width/2 - this->xPos)/(this->Width/15);
+            Player->Position.x -=  this->PaddleVelocity;
             if (Ball->Stuck)
-                Ball->Position.x -= velocity + dt;
+                Ball->Position.x -= this->PaddleVelocity + dt;
         }
         else if(this->xPos <= this->Width && this->xPos > this->Width/2 
                 && Player->Position.x <= this->Width - Player->Size.x)
         {
-            velocity = (this->xPos - this->Width/2)/(this->Width/15);
-            Player->Position.x += velocity;
+            this->PaddleVelocity = (this->xPos - this->Width/2)/(this->Width/15);
+            Player->Position.x += this->PaddleVelocity;
             if (Ball->Stuck)
-                Ball->Position.x += velocity + dt;
+                Ball->Position.x += this->PaddleVelocity + dt;
         }
         if (this->Keys[GLFW_KEY_SPACE])
             Ball->Stuck = false;
         if (this->Keys[GLFW_KEY_R])
             this->ResetLevel();
         if(this->MouseButtons[GLFW_MOUSE_BUTTON_LEFT])
-        {
             this->State = GAME_PAUSE;
-        }
         if(this->MouseButtons[GLFW_MOUSE_BUTTON_RIGHT])
-        {
             this->State = GAME_ATTRIBUTES;
-        }
-
     }
     if(this->State == GAME_MENU)
     {
@@ -245,8 +240,7 @@ void Game::Render()
         
         std::stringstream playerX; playerX << Player->Position.x;
         std::stringstream playerY; playerY << Player->Position.y;
-        std::stringstream playerVx; playerVx << Player->Velocity.x;
-        std::stringstream playerVy; playerVy << Player->Velocity.y;
+        std::stringstream playerV; playerV << this->PaddleVelocity;
 
         std::stringstream ballX; ballX << Ball->Position.x;
         std::stringstream ballY; ballY << Ball->Position.y;
@@ -254,7 +248,7 @@ void Game::Render()
         std::stringstream ballVy; ballVy << Ball->Velocity.y;
 
         Text->RenderText("ATTRIBUTES:", 5.0f, 5.0f, 1.0f);
-        Text->RenderText("Paddle: (" + playerX.str() + "," + playerY.str() + ")  V: (" + playerVx.str() + "," + playerVy.str() + ")", 5.0f, 50.0f, 1.0f);
+        Text->RenderText("Paddle: (" + playerX.str() + "," + playerY.str() + ")  V: " + playerV.str(), 5.0f, 50.0f, 1.0f);
         Text->RenderText("Ball: (" + ballX.str() + "," + ballY.str() + ")  V: (" + ballVx.str() + "," + ballVy.str() + ")", 5.0f, 100.0f, 1.0f);
     }
 }

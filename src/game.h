@@ -43,6 +43,7 @@ public:
     bool                    MouseButtons[2];
     double                  xPos;
     double                  yPos;
+    float                   PaddleVelocity = 0;
     unsigned int            Width, Height;
     std::vector<GameLevel>  Levels;
     unsigned int            Level;
