@@ -214,9 +214,17 @@ void Game::Render()
         // draw ball
         Ball->Draw(*Renderer);
 
+        int bricksDestroyed = 0;
+
+        for (GameObject &tile : this->Levels[this->Level].Bricks)
+            if(tile.Destroyed)
+                bricksDestroyed += 1;
+
         std::stringstream balls; balls << this->Lives;
+        std::stringstream bricks; bricks << bricksDestroyed;
+
         Text->RenderText("Balls:" + balls.str(), 5.0f, 5.0f, 1.0f);
-        Text->RenderText("Bricks:" + balls.str(), 150.0f, 5.0f, 1.0f);
+        Text->RenderText("Bricks:" + bricks.str(), 150.0f, 5.0f, 1.0f);
     }
     if(this->State == GAME_MENU)
     {
