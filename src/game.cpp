@@ -24,6 +24,7 @@
 SpriteRenderer  *Renderer;
 GameObject      *Player;
 ParticleGenerator   *Particles;
+TextRenderer      *Text;
 
 const glm::vec2 INITIAL_BALL_VELOCITY(100.0f, -350.0f);
 const float BALL_RADIUS = 12.5f;
