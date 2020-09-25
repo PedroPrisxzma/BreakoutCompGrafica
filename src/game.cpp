@@ -62,9 +62,9 @@ void Game::LoadShaders()
 void Game::LoadTextures()
 {
     ResourceManager::LoadTexture("textures/starry_background.jpg", false, "background");
-    ResourceManager::LoadTexture("textures/ball.png", true, "face");
-    ResourceManager::LoadTexture("textures/brick.png", false, "block");
-    ResourceManager::LoadTexture("textures/brick_solid.png", false, "block_solid");
+    ResourceManager::LoadTexture("textures/ball.png", true, "ball");
+    ResourceManager::LoadTexture("textures/brick.png", false, "brick");
+    ResourceManager::LoadTexture("textures/brick_solid.png", false, "brick_solid");
     ResourceManager::LoadTexture("textures/player_paddle.png", true, "paddle");
     ResourceManager::LoadTexture("textures/star_particle.png", true, "particle");
 }
@@ -91,7 +91,7 @@ void Game::ConfigureGameObjects()
     
     // Ball
     glm::vec2 ballPos = playerPos + glm::vec2(PLAYER_SIZE.x / 2.0f - BALL_RADIUS, -BALL_RADIUS * 2.0f);
-    Texture2D myFace = ResourceManager::GetTexture("face");
+    Texture2D myFace = ResourceManager::GetTexture("ball");
     Ball = new BallObject(ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, myFace);
     
     //Particle Effect
@@ -125,7 +125,7 @@ void Game::CheckDeath()
     {
         --this->Lives;
         if(this->Lives <= 0){
-            this->ResetLevel();
+            //this->ResetLevel();
             this->State = GAME_LOSE;
         }
         this->ResetPlayer();
@@ -136,8 +136,8 @@ void Game::CheckWin()
 {
   if(this->State == GAME_ACTIVE && this->Levels[this->Level].IsCompleted())
     {
-        this->ResetLevel();
-        this->ResetPlayer();
+        //this->ResetLevel();
+        //this->ResetPlayer();
         this->State = GAME_WIN;
     }
 }
@@ -200,7 +200,11 @@ void Game::ProcessInput(float dt)
     if(this->State == GAME_WIN || this->State == GAME_LOSE)
     {
         if(this->Keys[GLFW_KEY_R])
+        {
+            this->ResetLevel();
+            this->ResetPlayer();
             this->State = GAME_MENU;
+        }
     }
 
     if(this->State == GAME_PAUSE)
@@ -240,7 +244,7 @@ void Game::Render()
         
         Ball->Draw(*Renderer);
 
-        if(this->State != GAME_ATTRIBUTES)
+        if(this->State == GAME_ACTIVE || this->State == GAME_PAUSE)
         {
             int bricksDestroyed = 0;
 

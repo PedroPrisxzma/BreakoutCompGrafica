@@ -49,7 +49,7 @@ void GameLevel::CheckBlockType(float unit_width, float unit_height, unsigned int
 {
     glm::vec2 pos(unit_width * x, unit_height * y);
     glm::vec2 size(unit_width, unit_height);
-    GameObject obj(pos, size, ResourceManager::GetTexture("block_solid"), glm::vec3(0.8f, 0.8f, 0.7f));
+    GameObject obj(pos, size, ResourceManager::GetTexture("brick_solid"), glm::vec3(0.8f, 0.8f, 0.7f));
     obj.IsSolid = true;
     this->Bricks.push_back(obj);
 }
@@ -68,7 +68,7 @@ void GameLevel::BlockColoring(std::vector<std::vector<unsigned int>> tileData, f
         color = glm::vec3(0.350f, 0.0f, 0.610f); // dark purple
     glm::vec2 pos(unit_width * x, unit_height * y);
     glm::vec2 size(unit_width, unit_height);
-    this->Bricks.push_back(GameObject(pos, size, ResourceManager::GetTexture("block"), color));
+    this->Bricks.push_back(GameObject(pos, size, ResourceManager::GetTexture("brick"), color));
 }
 
 void GameLevel::init(std::vector<std::vector<unsigned int>> tileData, unsigned int levelWidth, unsigned int levelHeight)
