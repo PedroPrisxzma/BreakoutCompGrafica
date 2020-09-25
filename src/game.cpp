@@ -126,7 +126,7 @@ void Game::CheckDeath()
         --this->Lives;
         if(this->Lives <= 0){
             this->ResetLevel();
-            this->State = GAME_MENU;
+            this->State = GAME_LOSE;
         }
         this->ResetPlayer();
     }
@@ -197,7 +197,7 @@ void Game::ProcessInput(float dt)
         }
     }
     
-    if(this->State == GAME_WIN)
+    if(this->State == GAME_WIN || this->State == GAME_LOSE)
     {
         if(this->Keys[GLFW_KEY_ENTER])
             this->State = GAME_MENU;
@@ -226,7 +226,7 @@ void Game::ProcessInput(float dt)
 
 void Game::Render()
 {
-    if(this->State == GAME_ACTIVE || this->State == GAME_MENU || this->State == GAME_PAUSE)
+    if(this->State == GAME_ACTIVE || this->State == GAME_MENU || this->State == GAME_PAUSE || this->State == GAME_WIN || this->State == GAME_LOSE)
     {
         Texture2D myBackground = ResourceManager::GetTexture("background");
         
@@ -253,18 +253,24 @@ void Game::Render()
         Text->RenderText("Bricks:" + bricks.str(), 150.0f, 5.0f, 1.0f);
     }
     if(this->State == GAME_MENU)
-    {
-        Text->RenderText("Press ENTER to Start", 250.0f, Height/2, 1.0f);
-        Text->RenderText("Press W or S to select level", 245.0f, Height / 2 + 20.0f, 0.75f);
-    }
+    {   
+        Text->RenderText("Press ENTER to Start", 250.0f, Height/2+60.0f, 1.0f);
+        Text->RenderText("Press W or S to select level", 245.0f, Height / 2 + 85.0f, 0.75f);
+        Text->RenderText("Press SPACE to throw ball", 260.0f, Height / 2 + 105.0f, 0.75f);
+    }   
     if(this->State == GAME_WIN)
     {
-        Text->RenderText("You WON!!!", 320.0, Height / 2 - 20.0, 1.0, glm::vec3(0.0, 1.0, 0.0));
-        Text->RenderText("Press ENTER to retry or Q to quit", 130.0, Height / 2, 1.0, glm::vec3(1.0, 1.0, 0.0));
+        Text->RenderText("You Won the game!", 300.0f, Height/2+60.0f, 1.0f);
+        Text->RenderText("Press ENTER to retry or Q to quit", 250.0f, Height / 2 + 85.0f, 0.75f);
+    }
+    if(this->State == GAME_LOSE)
+    {
+        Text->RenderText("You Lose!", 350.0f, Height/2+60.0f, 1.0f);
+        Text->RenderText("Press ENTER to retry or Q to quit", 250.0f, Height / 2 + 85.0f, 0.75f);
     }
     if(this->State == GAME_PAUSE)
     {
-        Text->RenderText("PAUSE", 400.0f, Height/2, 1.0f);
+        Text->RenderText("PAUSE", 365.0f, Height/2, 1.0f);
     }
     if(this->State == GAME_ATTRIBUTES)
     {   
