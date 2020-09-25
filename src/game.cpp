@@ -103,7 +103,7 @@ void Game::ConfigureGameObjects()
 
     // Text
     Text = new TextRenderer(this->Width, this->Height);
-    Text->Load("fonts/OCRAEXT.TTF", 24);
+    Text->Load("fonts/VCR_OSD_MONO.ttf", 24);
 
 }
 
