@@ -226,7 +226,7 @@ void Game::ProcessInput(float dt)
 
 void Game::Render()
 {
-    if(this->State == GAME_ACTIVE || this->State == GAME_MENU || this->State == GAME_PAUSE || this->State == GAME_WIN || this->State == GAME_LOSE)
+    if(this->State == GAME_ACTIVE || this->State == GAME_MENU || this->State == GAME_PAUSE || this->State == GAME_WIN || this->State == GAME_LOSE || this->State == GAME_ATTRIBUTES)
     {
         Texture2D myBackground = ResourceManager::GetTexture("background");
         
@@ -240,17 +240,20 @@ void Game::Render()
         
         Ball->Draw(*Renderer);
 
-        int bricksDestroyed = 0;
+        if(this->State != GAME_ATTRIBUTES)
+        {
+            int bricksDestroyed = 0;
 
-        for (GameObject &tile : this->Levels[this->Level].Bricks)
-            if(tile.Destroyed)
-                bricksDestroyed += 1;
+            for (GameObject &tile : this->Levels[this->Level].Bricks)
+                if(tile.Destroyed)
+                    bricksDestroyed += 1;
 
-        std::stringstream balls; balls << this->Lives;
-        std::stringstream bricks; bricks << bricksDestroyed;
+            std::stringstream balls; balls << this->Lives;
+            std::stringstream bricks; bricks << bricksDestroyed;
 
-        Text->RenderText("Balls:" + balls.str(), 5.0f, 5.0f, 1.0f);
-        Text->RenderText("Bricks:" + bricks.str(), 150.0f, 5.0f, 1.0f);
+            Text->RenderText("Balls:" + balls.str(), 5.0f, 5.0f, 1.0f);
+            Text->RenderText("Bricks:" + bricks.str(), 150.0f, 5.0f, 1.0f);
+        }
     }
     if(this->State == GAME_MENU)
     {   
@@ -270,14 +273,11 @@ void Game::Render()
     }
     if(this->State == GAME_PAUSE)
     {
-        Text->RenderText("PAUSE", 365.0f, Height/2, 1.0f);
+        Text->RenderText("PAUSE", 360.0f, Height/2, 1.0f);
     }
+    
     if(this->State == GAME_ATTRIBUTES)
     {   
-        Texture2D myBackground = ResourceManager::GetTexture("background");
-        
-        Renderer->DrawSprite(myBackground, glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
-        
         std::stringstream playerX; playerX << Player->Position.x;
         std::stringstream playerY; playerY << Player->Position.y;
         std::stringstream playerV; playerV << this->PaddleVelocity;
@@ -287,9 +287,22 @@ void Game::Render()
         std::stringstream ballVx; ballVx << Ball->Velocity.x;
         std::stringstream ballVy; ballVy << Ball->Velocity.y;
 
-        Text->RenderText("ATTRIBUTES:", 5.0f, 5.0f, 1.0f);
-        Text->RenderText("Paddle: (" + playerX.str() + "," + playerY.str() + ")  V: " + playerV.str(), 5.0f, 50.0f, 1.0f);
-        Text->RenderText("Ball: (" + ballX.str() + "," + ballY.str() + ")  V: (" + ballVx.str() + "," + ballVy.str() + ")", 5.0f, 100.0f, 1.0f);
+        //Text->RenderText("ATTRIBUTES:", 5.0f, 5.0f, 1.0f);
+        Text->RenderText("X:" + playerX.str() + ", Y:" + playerY.str(), Player->Position.x+5.0f, Player->Position.y-20.0f, 0.4f);
+        Text->RenderText("V: " + playerV.str(), Player->Position.x+5.0f, Player->Position.y-10.0f, 0.4f);
+        Text->RenderText("X: " + ballX.str() + ",Y: " + ballY.str(), Ball->Position.x+35.0f, Ball->Position.y+5.0f, 0.4f);
+        Text->RenderText("V: (" + ballVx.str() + "," + ballVy.str() + ")", Ball->Position.x+35.0f, Ball->Position.y+15.0f, 0.4f);
+
+        for (GameObject &box : this->Levels[this->Level].Bricks)
+        {
+            if(!box.Destroyed)
+            {
+                std::stringstream brickX; brickX << round(box.Position.x);
+                std::stringstream brickY; brickY << box.Position.y;
+                Text->RenderText("X:" + brickX.str(), box.Position.x+12.0f, box.Position.y+10.0f, 0.40f);
+                Text->RenderText("Y:" + brickY.str(), box.Position.x+12.0f, box.Position.y+20.0f, 0.40f);
+            }
+        }
     }
 }
 
