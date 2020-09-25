@@ -61,12 +61,12 @@ void Game::LoadShaders()
 
 void Game::LoadTextures()
 {
-    ResourceManager::LoadTexture("textures/background.jpg", false, "background");
-    ResourceManager::LoadTexture("textures/awesomeface.png", true, "face");
-    ResourceManager::LoadTexture("textures/block.png", false, "block");
-    ResourceManager::LoadTexture("textures/block_solid.png", false, "block_solid");
-    ResourceManager::LoadTexture("textures/paddle.png", true, "paddle");
-    ResourceManager::LoadTexture("textures/particle.png", true, "particle");
+    ResourceManager::LoadTexture("textures/starry_background.jpg", false, "background");
+    ResourceManager::LoadTexture("textures/ball.png", true, "face");
+    ResourceManager::LoadTexture("textures/brick.png", false, "block");
+    ResourceManager::LoadTexture("textures/brick_solid.png", false, "block_solid");
+    ResourceManager::LoadTexture("textures/player_paddle.png", true, "paddle");
+    ResourceManager::LoadTexture("textures/circle_particle.png", true, "particle");
 }
 
 void Game::LoadLevels()
