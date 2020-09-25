@@ -66,7 +66,7 @@ void Game::LoadTextures()
     ResourceManager::LoadTexture("textures/brick.png", false, "block");
     ResourceManager::LoadTexture("textures/brick_solid.png", false, "block_solid");
     ResourceManager::LoadTexture("textures/player_paddle.png", true, "paddle");
-    ResourceManager::LoadTexture("textures/circle_particle.png", true, "particle");
+    ResourceManager::LoadTexture("textures/star_particle.png", true, "particle");
 }
 
 void Game::LoadLevels()
@@ -177,29 +177,29 @@ void Game::ProcessInput(float dt)
     
     if (this->State == GAME_MENU)
     {
-        if (this->Keys[GLFW_KEY_ENTER] && !this->KeysProcessed[GLFW_KEY_ENTER])
+        if (this->Keys[GLFW_KEY_SPACE] && !this->KeysProcessed[GLFW_KEY_SPACE])
         {
             this->State = GAME_ACTIVE;
-            this->KeysProcessed[GLFW_KEY_ENTER] = true;
+            this->KeysProcessed[GLFW_KEY_SPACE] = true;
         }
-        if (this->Keys[GLFW_KEY_W] && !this->KeysProcessed[GLFW_KEY_W])
+        if (this->Keys[GLFW_KEY_D] && !this->KeysProcessed[GLFW_KEY_D])
         {
             this->Level = (this->Level + 1) % 4;
-            this->KeysProcessed[GLFW_KEY_W] = true;
+            this->KeysProcessed[GLFW_KEY_D] = true;
         }
-        if (this->Keys[GLFW_KEY_S] && !this->KeysProcessed[GLFW_KEY_S])
+        if (this->Keys[GLFW_KEY_A] && !this->KeysProcessed[GLFW_KEY_A])
         {
             if (this->Level > 0)
                 --this->Level;
             else
                 this->Level = 3;
-            this->KeysProcessed[GLFW_KEY_S] = true;
+            this->KeysProcessed[GLFW_KEY_A] = true;
         }
     }
     
     if(this->State == GAME_WIN || this->State == GAME_LOSE)
     {
-        if(this->Keys[GLFW_KEY_ENTER])
+        if(this->Keys[GLFW_KEY_R])
             this->State = GAME_MENU;
     }
 
@@ -257,19 +257,18 @@ void Game::Render()
     }
     if(this->State == GAME_MENU)
     {   
-        Text->RenderText("Press ENTER to Start", 250.0f, Height/2+60.0f, 1.0f);
-        Text->RenderText("Press W or S to select level", 245.0f, Height / 2 + 85.0f, 0.75f);
-        Text->RenderText("Press SPACE to throw ball", 260.0f, Height / 2 + 105.0f, 0.75f);
+        Text->RenderText("Press SPACE to Start", 250.0f, Height/2+60.0f, 1.0f);
+        Text->RenderText("Press A or D to select level", 245.0f, Height / 2 + 85.0f, 0.75f);
     }   
     if(this->State == GAME_WIN)
     {
         Text->RenderText("You Won the game!", 300.0f, Height/2+60.0f, 1.0f);
-        Text->RenderText("Press ENTER to retry or Q to quit", 250.0f, Height / 2 + 85.0f, 0.75f);
+        Text->RenderText("Press R to retry or Q to quit", 250.0f, Height / 2 + 85.0f, 0.75f);
     }
     if(this->State == GAME_LOSE)
     {
         Text->RenderText("You Lose!", 350.0f, Height/2+60.0f, 1.0f);
-        Text->RenderText("Press ENTER to retry or Q to quit", 250.0f, Height / 2 + 85.0f, 0.75f);
+        Text->RenderText("Press R to retry or Q to quit", 250.0f, Height / 2 + 85.0f, 0.75f);
     }
     if(this->State == GAME_PAUSE)
     {
