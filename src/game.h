@@ -1,13 +1,3 @@
-
-
-/*******************************************************************
-** This code is part of Breakout.
-**
-** Breakout is free software: you can redistribute it and/or modify
-** it under the terms of the CC BY 4.0 license as published by
-** Creative Commons, either version 4 of the License, or (at your
-** option) any later version.
-******************************************************************/
 #ifndef GAME_H
 #define GAME_H
 
@@ -15,6 +5,7 @@
 #include <GLFW/glfw3.h>
 
 #include "game_level.h"
+#include "colision.h"
 
 // Represents the current state of the game
 enum GameState {
@@ -25,18 +16,15 @@ enum GameState {
     GAME_ATTRIBUTES
 };
 
-// Initial size of the player paddle
+// Initial size
 const glm::vec2 PLAYER_SIZE(100.0f, 20.0f);
-// Initial velocity of the player paddle
+// Initial velocity 
 const float PLAYER_VELOCITY(500.0f);
 
-// Game holds all game-related state and functionality.
-// Combines all game-related data into a single class for
-// easy access to each of the components and manageability.
+
 class Game
 {
 public:
-    // game state
     GameState               State;  
     bool                    Keys[1024];
     bool                    CursorEntered; 
@@ -48,19 +36,34 @@ public:
     std::vector<GameLevel>  Levels;
     unsigned int            Level;
     unsigned int            Lives = 3;
-    // constructor/destructor
+
     Game(unsigned int width, unsigned int height);
     ~Game();
-    // initialize game state (load all shaders/textures/levels)
+
+     
     void Init();
-    // game loop
+
+    void LoadShaders();
+    void LoadTextures();
+    void LoadLevels();
+
+    void ConfigureGameObjects();
+    
+    // game loop    
     void ProcessInput(float dt);
     void Update(float dt);
+    void CheckDeath();
+    void CheckWin();
     void Render();
     void DoCollisions();
-    // reset
+    void HorizontalCollision(Direction dir, glm::vec2 diff_vector);
+    void VerticalCollision(Direction dir, glm::vec2 diff_vector);
+    void PaddleCollision();
+    
     void ResetLevel();
     void ResetPlayer();
+
+    bool KeysProcessed[1024];
 };
 
 #endif

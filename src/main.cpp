@@ -1,13 +1,3 @@
-
-
-/*******************************************************************
-** This code is part of Breakout.
-**
-** Breakout is free software: you can redistribute it and/or modify
-** it under the terms of the CC BY 4.0 license as published by
-** Creative Commons, either version 4 of the License, or (at your
-** option) any later version.
-******************************************************************/
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -23,9 +13,7 @@ static void cursor_position_callback(GLFWwindow *window, double xPos, double yPo
 void cursor_enter_callback(GLFWwindow *window, int entered);
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 
-// The Width of the screen
 const unsigned int SCREEN_WIDTH = 800;
-// The height of the screen
 const unsigned int SCREEN_HEIGHT = 600;
 
 Game Breakout(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -45,7 +33,6 @@ int main(int argc, char *argv[])
     glfwMakeContextCurrent(window);
 
     // glad: load all OpenGL function pointers
-    // ---------------------------------------
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
@@ -55,45 +42,35 @@ int main(int argc, char *argv[])
     glfwSetKeyCallback(window, key_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, cursor_position_callback);
-    //glfwSetInputMode(window, GLFW_CURSOR_HIDDEN);
     glfwSetCursorEnterCallback(window, cursor_enter_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetInputMode(window, GLFW_STICKY_MOUSE_BUTTONS,1);
 
     // OpenGL configuration
-    // --------------------
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // initialize game
-    // ---------------
     Breakout.Init();
 
-    // deltaTime variables
-    // -------------------
+    // deltaTime
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
 
     while (!glfwWindowShouldClose(window))
     {
         // calculate delta time
-        // --------------------
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
         glfwPollEvents();
 
-        // manage user input
-        // -----------------
+        // User input
         Breakout.ProcessInput(deltaTime);
 
-        // update game state
-        // -----------------
+        // Game state updating
         Breakout.Update(deltaTime);
 
-        // render
-        // ------
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         Breakout.Render();
@@ -101,8 +78,6 @@ int main(int argc, char *argv[])
         glfwSwapBuffers(window);
     }
 
-    // delete all resources as loaded using the resource manager
-    // ---------------------------------------------------------
     ResourceManager::Clear();
 
     glfwTerminate();
@@ -111,15 +86,20 @@ int main(int argc, char *argv[])
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-    // when a user presses the Q key, we set the WindowShouldClose property to true, closing the application
+    // Pressing the Q key, quits the application
     if (key == GLFW_KEY_Q && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
     if (key >= 0 && key < 1024)
     {
         if (action == GLFW_PRESS)
             Breakout.Keys[key] = true;
+
         else if (action == GLFW_RELEASE)
+        {
             Breakout.Keys[key] = false;
+            Breakout.KeysProcessed[key] = false;
+        }
     }
 }
 
