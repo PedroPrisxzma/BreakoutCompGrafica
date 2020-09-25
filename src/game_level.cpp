@@ -59,13 +59,13 @@ void GameLevel::BlockColoring(std::vector<std::vector<unsigned int>> tileData, f
 {
     glm::vec3 color = glm::vec3(1.0f); // original: white
     if (tileData[y][x] == 2)
-        color = glm::vec3(0.2f, 0.6f, 1.0f);
+        color = glm::vec3(0.11f, 0.2f, 0.804f);// dark blue 
     else if (tileData[y][x] == 3)
-        color = glm::vec3(0.0f, 0.7f, 0.0f);
+        color = glm::vec3(0.2f, 0.649f, 0.9f); // light blue
     else if (tileData[y][x] == 4)
-        color = glm::vec3(0.8f, 0.8f, 0.4f);
+        color = glm::vec3(0.581f, 0.169f, 0.827f); // purple
     else if (tileData[y][x] == 5)
-        color = glm::vec3(1.0f, 0.5f, 0.0f);
+        color = glm::vec3(0.350f, 0.0f, 0.610f); // dark purple
     glm::vec2 pos(unit_width * x, unit_height * y);
     glm::vec2 size(unit_width, unit_height);
     this->Bricks.push_back(GameObject(pos, size, ResourceManager::GetTexture("block"), color));
