@@ -6,6 +6,7 @@
 
 #include "game_level.h"
 #include "colision.h"
+#include "power_up.h"
 
 // Represents the current state of the game
 enum GameState {
@@ -26,17 +27,18 @@ const float PLAYER_VELOCITY(500.0f);
 class Game
 {
 public:
-    GameState               State;  
-    bool                    Keys[1024];
-    bool                    CursorEntered; 
-    bool                    MouseButtons[2];
-    double                  xPos;
-    double                  yPos;
-    float                   PaddleVelocity = 0;
-    unsigned int            Width, Height;
-    std::vector<GameLevel>  Levels;
-    unsigned int            Level;
-    unsigned int            Lives = 3;
+    GameState State;  
+    bool Keys[1024];
+    bool CursorEntered; 
+    bool MouseButtons[2];
+    double xPos;
+    double yPos;
+    float PaddleVelocity = 0;
+    unsigned int Width, Height;
+    std::vector<GameLevel> Levels;
+    unsigned int Level;
+    unsigned int Lives = 3;
+    std::vector<PowerUp>  PowerUps;
 
     Game(unsigned int width, unsigned int height);
     ~Game();
@@ -64,6 +66,9 @@ public:
     void ResetLevel();
     void ResetPlayer();
 
+    void SpawnPowerUps(GameObject &block);
+    void UpdatePowerUps(float dt);
+    
     bool KeysProcessed[1024];
 };
 

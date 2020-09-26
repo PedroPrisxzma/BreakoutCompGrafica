@@ -21,6 +21,7 @@ Game Breakout(SCREEN_WIDTH, SCREEN_HEIGHT);
 int main(int argc, char *argv[])
 {
     glfwInit();
+
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -61,6 +62,7 @@ int main(int argc, char *argv[])
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
         glfwPollEvents();
+        
 
         // User input
         Breakout.ProcessInput(deltaTime);
@@ -71,6 +73,7 @@ int main(int argc, char *argv[])
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         Breakout.Render();
+        
 
         glfwSwapBuffers(window);
     }
