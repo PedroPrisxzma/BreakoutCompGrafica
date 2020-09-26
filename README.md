@@ -15,7 +15,7 @@ Breakout game, implementação feita para disciplina de Computação Gráfica da
 # Executando
 Uma vez com todas as dependências instaladas, note que alguns pacotes vão pedir subdependências ao instalá-las, a execução da
 compilação é feita simplesmente rodando "make" na pasta que contém o Makefile. A execução do jogo, é então feita rodando 
-"./breakout" no terminal na pasta que contém o breakout (arquivo compilado).
+"./breakout" no terminal na pasta que contém o breakout (arquivo compilado), ou pode-se rodar usando "make run".
 
 # Observações
 No Makefile, temos a flag -lglfw, ela deve ser alterada para a versão correspondente do GLFW instalada, por exemplo, -lglfw2 ou -lglfw3.
