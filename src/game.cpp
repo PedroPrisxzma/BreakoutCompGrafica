@@ -91,10 +91,12 @@ void Game::LoadLevels()
     GameLevel two; two.Load("levels/two.lvl", this->Width, this->Height / 2);
     GameLevel three; three.Load("levels/three.lvl", this->Width, this->Height / 2);
     GameLevel four; four.Load("levels/four.lvl", this->Width, this->Height / 2);
+    GameLevel five; five.Load("levels/five.lvl", this->Width, this->Height / 2);
     this->Levels.push_back(one);
     this->Levels.push_back(two);
     this->Levels.push_back(three);
     this->Levels.push_back(four);
+    this->Levels.push_back(five);
     this->Level = 0;
 }
 
@@ -212,7 +214,7 @@ void Game::ProcessInput(float dt)
         }
         if (this->Keys[GLFW_KEY_D] && !this->KeysProcessed[GLFW_KEY_D])
         {
-            this->Level = (this->Level + 1) % 4;
+            this->Level = (this->Level + 1) % 5;
             this->KeysProcessed[GLFW_KEY_D] = true;
         }
         if (this->Keys[GLFW_KEY_A] && !this->KeysProcessed[GLFW_KEY_A])
@@ -220,7 +222,7 @@ void Game::ProcessInput(float dt)
             if (this->Level > 0)
                 --this->Level;
             else
-                this->Level = 3;
+                this->Level = 4;
             this->KeysProcessed[GLFW_KEY_A] = true;
         }
     }
@@ -459,6 +461,8 @@ void Game::ResetLevel()
         this->Levels[2].Load("levels/three.lvl", this->Width, this->Height / 2);
     else if (this->Level == 3)
         this->Levels[3].Load("levels/four.lvl", this->Width, this->Height / 2);
+    else if (this->Level == 4)
+        this->Levels[3].Load("levels/five.lvl", this->Width, this->Height / 2);
 }
 
 void Game::ResetPlayer()
