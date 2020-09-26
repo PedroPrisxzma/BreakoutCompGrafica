@@ -1,6 +1,7 @@
 # BreakoutCompGrafica
-Breakout game implementation done for Computer Graphics course at UFMG
+Breakout game, implementação feita para disciplina de Computação Gráfica da UFMG
 
+- Gameplay demonstrativo: https://youtu.be/SCa8Da2tV3w
 
 # Dependências
 - OpenGL (usamos o 3.3)
@@ -52,10 +53,12 @@ No jogo em si, implementamos:
 
 - PowerUps  
   - Bons, aparecem com uma chance de 1/75 ao se qubrar um bloco 
-    - SPEED, aumenta a velocidade do paddle.
+    - Podem acontecer ao mesmo tempo, inclusive ao mesmo tempo de um dos efeitos ruins.
+    - SPEED, aumenta a velocidade da bola.
     - STICKY, a bola gruda no paddle ao bater nele, podendo ser solta ao se apertar SPACE.
     - BIGGER, o paddle aumenta de tamanho.
     - PHANTOM, a bola não é refletida ao bater nos blocos.
   - Ruins, aparecem com uma chance de 1/15 ao se quebrar um bloco
+    - Não podem acontecer ao mesmo tempo.
     - CHAOS, Distorce o espaço, ciclando e movendo pela janela, além de modificar a aparência em si da tela. 
     - CONFUSE, Inverte a tela, cima é baixo, direita é esquerda, as cores também são invertidas.
