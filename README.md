@@ -4,9 +4,11 @@ Breakout game implementation done for Computer Graphics course at UFMG
 
 # Dependências
 - GLFW - https://www.glfw.org/
-- Grad - https://github.com/Dav1dde/glad ou https://glad.dav1d.de/
-- STB - Especificamente STB_image.h - https://github.com/nothings/stb
+- Grad - https://github.com/Dav1dde/glad ou https://glad.dav1d.de/ **
+- STB - Especificamente STB_image.h - https://github.com/nothings/stb **
 - Freetype2
+
+**: Devem ter os arquivos incluidos manualmente na /usr/include
 
 # Executando
 Uma vez com todas as dependências instaladas, note que alguns pacotes vão pedir subdependências ao instalá-las, a execução da
