@@ -37,7 +37,7 @@ void ActivatePowerUp(PowerUp &powerUp, PostProcessor *Effects, GameObject *Playe
     else if (powerUp.Type == "confuse")
     {
         if (!Effects->Chaos)
-            Effects->Confuse = true; // only activate if chaos wasn't already active
+            Effects->Confuse = true;
     }
     else if (powerUp.Type == "chaos")
     {

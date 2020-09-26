@@ -1,7 +1,7 @@
 #include "particle_generator.h"
 
 ParticleGenerator::ParticleGenerator(Shader shader, Texture2D texture, unsigned int amount)
-    : shader(shader), texture(texture), amount(amount)
+    : amount(amount), shader(shader), texture(texture)
 {
     this->init();
 }

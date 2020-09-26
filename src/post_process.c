@@ -14,14 +14,18 @@ PostProcessor::PostProcessor(Shader shader, unsigned int width, unsigned int hei
     GLint max_samples;
     glGetIntegerv(GL_MAX_SAMPLES, &max_samples);
 
-    glRenderbufferStorageMultisample(GL_RENDERBUFFER, max_samples, GL_RGB, width, height); // allocate storage for render buffer object
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, this->RBO); // attach MS render buffer object to framebuffer
+    // allocate storage for render buffer object
+    glRenderbufferStorageMultisample(GL_RENDERBUFFER, max_samples, GL_RGB, width, height); 
+    // attach MS render buffer object to framebuffer
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, this->RBO); 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         std::cout << "ERROR::POSTPROCESSOR: Failed to initialize MSFBO" << std::endl;
     
     glBindFramebuffer(GL_FRAMEBUFFER, this->FBO);
     this->Texture.Generate(width, height, NULL);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->Texture.ID, 0); // attach texture to framebuffer as its color attachment
+
+    // attach texture to framebuffer as its color attachment
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->Texture.ID, 0); 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         std::cout << "ERROR::POSTPROCESSOR: Failed to initialize FBO" << std::endl;
     glBindFramebuffer(GL_FRAMEBUFFER, 0);

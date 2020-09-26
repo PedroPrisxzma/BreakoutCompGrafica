@@ -15,7 +15,7 @@ struct Character {
     unsigned int TextureID; 
     glm::ivec2 Size;      
     glm::ivec2 Bearing;     // offset from baseline to left/top of glyph
-    unsigned int Advance;   // horizontal offset to advance to next glyph
+    long Advance;   // horizontal offset to advance to next glyph
 };
 
 

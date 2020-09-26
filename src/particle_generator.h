@@ -29,6 +29,7 @@ public:
 private:
     // state
     std::vector<Particle> particles;
+    // max number of particles
     unsigned int amount;
     
     // render 
