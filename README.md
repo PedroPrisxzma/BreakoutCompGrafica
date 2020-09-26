@@ -4,7 +4,7 @@ Breakout game implementation done for Computer Graphics course at UFMG
 
 # Dependências
 - GLFW - https://www.glfw.org/
-- Glad - https://github.com/Dav1dde/glad ou https://glad.dav1d.de/
+- Grad - https://github.com/Dav1dde/glad ou https://glad.dav1d.de/
 - STB - Especificamente STB_image.h - https://github.com/nothings/stb
 - Freetype2
 
