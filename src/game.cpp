@@ -76,12 +76,12 @@ void Game::LoadTextures()
     ResourceManager::LoadTexture("textures/brick_solid.png", false, "brick_solid");
     ResourceManager::LoadTexture("textures/player_paddle.png", true, "paddle");
     ResourceManager::LoadTexture("textures/star_particle.png", true, "particle");
-    ResourceManager::LoadTexture("textures/powerup_speed.png", true, "powerup_speed");
-    ResourceManager::LoadTexture("textures/powerup_sticky.png", true, "powerup_sticky");
-    ResourceManager::LoadTexture("textures/powerup_increase.png", true, "powerup_increase");
-    ResourceManager::LoadTexture("textures/powerup_confuse.png", true, "powerup_confuse");
-    ResourceManager::LoadTexture("textures/powerup_chaos.png", true, "powerup_chaos");
-    ResourceManager::LoadTexture("textures/powerup_passthrough.png", true, "powerup_passthrough");
+    ResourceManager::LoadTexture("textures/speed.png", true, "powerup_speed");
+    ResourceManager::LoadTexture("textures/sticky.png", true, "powerup_sticky");
+    ResourceManager::LoadTexture("textures/increase.png", true, "powerup_increase");
+    ResourceManager::LoadTexture("textures/confuse.png", true, "powerup_confuse");
+    ResourceManager::LoadTexture("textures/chaos.png", true, "powerup_chaos");
+    ResourceManager::LoadTexture("textures/passthrough.png", true, "powerup_passthrough");
 
 }
 
