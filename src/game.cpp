@@ -154,7 +154,6 @@ void Game::CheckDeath()
     {
         --this->Lives;
         if(this->Lives <= 0){
-            //this->ResetLevel();
             this->State = GAME_LOSE;
         }
         this->ResetPlayer();
@@ -165,8 +164,7 @@ void Game::CheckWin()
 {
   if(this->State == GAME_ACTIVE && this->Levels[this->Level].IsCompleted())
     {
-        //this->ResetLevel();
-        //this->ResetPlayer();
+        Ball->Stuck = true;
         this->State = GAME_WIN;
     }
 }
