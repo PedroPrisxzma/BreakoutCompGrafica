@@ -6,7 +6,7 @@ GL_FLAGS = -lglfw -lGL -lm -lX11 -lpthread -lXi -lXrandr -ldl -I/usr/include/fre
 
 FILES = $(wildcard src/*.cpp) $(wildcard src/*.c)
 
-APP_NAME = main
+APP_NAME = breakout
 
 all: main
 

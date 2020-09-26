@@ -1,6 +1,7 @@
 # BreakoutCompGrafica
-Breakout game implementation done for Computer Graphics course at UFMG
+Breakout game, implementação feita para disciplina de Computação Gráfica da UFMG
 
+- Gameplay demonstrativo: https://youtu.be/tIgQAp53vik
 
 # Dependências
 - OpenGL (usamos o 3.3)
@@ -26,7 +27,7 @@ Implementação em C/C++ devido a familiaridade com a linguagem e os recursos de
 Escolhemos uma estética de Space para o jogo.
 
 No jogo em si, implementamos:
-
+- No canto superior direito da tela, exibimos a quantidade de "bolas" ou "vidas" do jogador e o número de blocos já quebrados.
 - Menu
   - O jogo se inicia nessa tela, nela tem-se a opção de selecionar dentre os níveis disponíveis utilizando as teclas A e D.
   - Pode-se iniciar o jogo apertando a barra de espaço, SPACE.
@@ -52,10 +53,12 @@ No jogo em si, implementamos:
 
 - PowerUps  
   - Bons, aparecem com uma chance de 1/75 ao se qubrar um bloco 
-    - SPEED, aumenta a velocidade do paddle.
+    - Podem acontecer ao mesmo tempo, inclusive ao mesmo tempo de um dos efeitos ruins.
+    - SPEED, aumenta a velocidade da bola.
     - STICKY, a bola gruda no paddle ao bater nele, podendo ser solta ao se apertar SPACE.
     - BIGGER, o paddle aumenta de tamanho.
     - PHANTOM, a bola não é refletida ao bater nos blocos.
   - Ruins, aparecem com uma chance de 1/15 ao se quebrar um bloco
+    - Não podem acontecer ao mesmo tempo.
     - CHAOS, Distorce o espaço, ciclando e movendo pela janela, além de modificar a aparência em si da tela. 
-    - INVERT, Inverte a tela, cima é baixo, direita é esquerda, as cores também são invertidas.
+    - CONFUSE, Inverte a tela, cima é baixo, direita é esquerda, as cores também são invertidas.
