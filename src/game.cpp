@@ -135,7 +135,8 @@ void Game::Update(float dt)
     
     Particles->Update(dt, *Ball, 2, glm::vec2(Ball->Radius / 2.0f));    
     
-    this->UpdatePowerUps(dt);
+    if(this->State == GAME_ACTIVE)
+        this->UpdatePowerUps(dt);
 
     this->CheckDeath();
     this->CheckWin();
@@ -466,6 +467,10 @@ void Game::ResetPlayer()
     Player->Size = PLAYER_SIZE;
     Player->Position = glm::vec2(this->Width / 2.0f - PLAYER_SIZE.x / 2.0f, this->Height - PLAYER_SIZE.y);
     Ball->Reset(Player->Position + glm::vec2(PLAYER_SIZE.x / 2.0f - BALL_RADIUS, -(BALL_RADIUS * 2.0f)), INITIAL_BALL_VELOCITY);
+    Effects->Chaos = Effects->Confuse = false;
+    Ball->PassThrough = Ball->Sticky = false;
+    Player->Color = glm::vec3(1.0f);
+    Ball->Color = glm::vec3(1.0f);
 }
 
 void Game::SpawnPowerUps(GameObject &block)
