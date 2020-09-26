@@ -1,7 +1,7 @@
 # BreakoutCompGrafica
 Breakout game, implementação feita para disciplina de Computação Gráfica da UFMG
 
-- Gameplay demonstrativo: https://youtu.be/SCa8Da2tV3w
+- Gameplay demonstrativo: https://youtu.be/tIgQAp53vik
 
 # Dependências
 - OpenGL (usamos o 3.3)
