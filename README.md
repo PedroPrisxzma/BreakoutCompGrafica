@@ -1,3 +1,5 @@
+- Pedro Nascimento e Scarlet Gianasi
+
 # BreakoutCompGrafica
 Breakout game, implementação feita para disciplina de Computação Gráfica da UFMG
 
